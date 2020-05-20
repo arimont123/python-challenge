@@ -4,25 +4,24 @@ csvpath = "election_data.csv"
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
     csv_header = next(csvreader)
-
-    voterID = []
+    voterID = [] #create empty lists for each column 
     county = []
     candidate = []
     for row in csvreader:
-        #create lists of data for each column
+        #pupulate lists with data from each column
         voterID.append(row[0]) 
         county.append(row[1])
         candidate.append(row[2])
     total_votes = len(voterID) #calculates total number of votes
-
-    khan_vote = 0
+    
+    khan_vote = 0 #set count for Khan vote to zero initially
     correy_vote = 0
     li_vote = 0
     otool_vote = 0
     for person in range(0,len(candidate)):
         if candidate[person] == "Khan":
             khan_vote += 1 #adds 1 to khan_vote every time the candidate is encountered 
-            khan_perc = (khan_vote/total_votes)*100
+            khan_perc = (khan_vote/total_votes)*100 #calculates percentage of votes Kahn won
         if candidate[person] == "Correy":
             correy_vote += 1
             correy_perc = (correy_vote/total_votes)*100
@@ -41,15 +40,30 @@ with open(csvpath) as csvfile:
         winner = "Li"
     elif otool_perc> khan_perc and li_perc and correy_perc:
         winner = "O'Tooley"
-
+    #prints results to terminal 
     print("Election Results")
     print("-------------------------")
     print(f"Total Votes: {total_votes}")
     print("-------------------------")
-    print(f"Khan: {round(khan_perc)}% ({khan_vote})")
-    print(f"Correy: {round(correy_perc)}% ({correy_vote})")
-    print(f"Li: {round(li_perc)}% ({li_vote})")
-    print(f"O'Tooley: {round(otool_perc)}% ({otool_vote})")
+    print(f"Khan: {round(khan_perc)}.000% ({khan_vote})")
+    print(f"Correy: {round(correy_perc)}.000% ({correy_vote})")
+    print(f"Li: {round(li_perc)}.000% ({li_vote})")
+    print(f"O'Tooley: {round(otool_perc)}.000% ({otool_vote})")
     print("-------------------------")
     print("Winner: " + winner)
     print("-------------------------")
+    #Export text file with results
+    f= open("Poll_Results.txt", 'w+') 
+    f.write("Election Results\n")
+    f.write("-------------------------\n")
+    f.write(f"Total Votes: {total_votes}\n")
+    f.write("-------------------------\n")
+    f.write(f"Khan: {round(khan_perc)}.000% ({khan_vote})\n")
+    f.write(f"Correy: {round(correy_perc)}.000% ({correy_vote})\n")
+    f.write(f"Li: {round(li_perc)}.000% ({li_vote})\n")
+    f.write(f"O'Tooley: {round(otool_perc)}.000% ({otool_vote})\n")
+    f.write("-------------------------\n")
+    f.write(f"Winner: {winner}\n")
+    f.write("-------------------------")
+    
+    
