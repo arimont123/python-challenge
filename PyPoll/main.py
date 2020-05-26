@@ -1,5 +1,6 @@
 import os
 import csv
+#python script is saved in same folder as csv
 csvpath = "election_data.csv"
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
@@ -13,15 +14,18 @@ with open(csvpath) as csvfile:
         county.append(row[1])
         candidate.append(row[2])
     total_votes = len(voterID) #calculates total number of votes
-    
-    khan_vote = 0 #set count for Khan vote to zero initially
+    #set count for each candidates vote to zero 
+    khan_vote = 0 
     correy_vote = 0
     li_vote = 0
     otool_vote = 0
+    #loop through candidate column
     for person in range(0,len(candidate)):
         if candidate[person] == "Khan":
-            khan_vote += 1 #adds 1 to khan_vote every time the candidate is encountered 
-            khan_perc = (khan_vote/total_votes)*100 #calculates percentage of votes Kahn won
+            #adds 1 to vote count every time the candidate is encountered 
+            khan_vote += 1 
+            #calculates percentage of candidates votes
+            khan_perc = (khan_vote/total_votes)*100 
         if candidate[person] == "Correy":
             correy_vote += 1
             correy_perc = (correy_vote/total_votes)*100
@@ -40,7 +44,7 @@ with open(csvpath) as csvfile:
         winner = "Li"
     elif otool_perc> khan_perc and li_perc and correy_perc:
         winner = "O'Tooley"
-    #prints results to terminal 
+    #prints results to terminal
     print("Election Results")
     print("-------------------------")
     print(f"Total Votes: {total_votes}")
